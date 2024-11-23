@@ -1,0 +1,116 @@
+$(function () {
+    // Initialize AOS (Animate On Scroll)
+    AOS.init();
+
+    // Function to play audio
+    function playAudio() {
+        const audioElement = document.getElementById("audio");
+        if (audioElement) {
+            audioElement.play().catch(function(error) {
+                console.log("Autoplay was prevented. User interaction is required to play audio.");
+            });
+        }
+    }
+
+    // Event listener for scroll
+    window.addEventListener('scroll', function onScroll() {
+        playAudio();
+        // Remove the event listener after the first scroll to prevent multiple plays
+        window.removeEventListener('scroll', onScroll);
+    });
+
+    // Event listener for click
+    window.addEventListener('click', function onClick() {
+        playAudio();
+        // Remove the event listener after the first click to prevent multiple plays
+        window.removeEventListener('click', onClick);
+    });
+
+    // Countdown Timer Function
+    function startCountdown(targetDate) {
+        setInterval(function () {
+            const now = Math.floor(Date.now() / 1000);
+            const target = Math.floor(Date.parse(targetDate) / 1000);
+            const remaining = target - now;
+
+            if (remaining < 0) {
+                $("#adays, #ahours, #aminutes, #aseconds").html("00");
+                return; // Countdown has ended
+            }
+
+            const days = Math.floor(remaining / 86400);
+            const hours = Math.floor((remaining % 86400) / 3600);
+            const minutes = Math.floor((remaining % 3600) / 60);
+            const seconds = remaining % 60;
+
+            // Smoothly update countdown values
+            $("#adays").fadeOut(200, function() {
+                $(this).html(days).fadeIn(200);
+            });
+            $("#ahours").fadeOut(200, function() {
+                $(this).html(hours < 10 ? "0" + hours : hours).fadeIn(200);
+            });
+            $("#aminutes").fadeOut(200, function() {
+                $(this).html(minutes < 10 ? "0" + minutes : minutes).fadeIn(200);
+            });
+            $("#aseconds").fadeOut(200, function() {
+                $(this).html(seconds < 10 ? "0" + seconds : seconds).fadeIn(200);
+            });
+        }, 1000);
+    }
+
+    // Start countdown to the target date
+    startCountdown("14 December 2024 19:00:00 GMT+01:00");
+
+    // Scroll to Top Functionality
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 250) {
+            $(".scrollup").fadeIn();
+        } else {
+            $(".scrollup").fadeOut();
+        }
+
+        // Parallax effect for sections
+        $('.parallax').each(function() {
+            const scrollPos = $(this).offset().top - $(window).scrollTop();
+            $(this).css('background-position', 'center ' + (scrollPos * 0.5) + 'px');
+        });
+        
+        // Scroll Progress Indicator
+        const scrollTop = $(this).scrollTop();
+        const docHeight = $(document).height() - $(window).height();
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        $('.scroll-progress').css('width', scrollPercent + '%');
+    });
+
+    $(".scrollup").click(function () {
+        $("html, body").animate({ scrollTop: 0 }, 300);
+        return false;
+    });
+
+    // Navigation Toggle
+    $(document).on("click", ".mob-toggle", function () {
+        $(this).toggleClass("open");
+        $(".navmenu").toggleClass("open");
+    });
+
+    // Smooth Scroll for Navigation Links
+    $(".headerBtn a, .introductionBtn a, .coupleBtn a, .tilakBtn a, .haldiBtn a, .weddingBtn a, .galleryBtn a").click(function (event) {
+        event.preventDefault();
+        const targetId = $(this).attr("href");
+        const targetOffset = $(targetId).offset().top;
+
+        $(".mob-toggle").removeClass("open");
+        $(".navmenu").removeClass("open");
+        $("html, body").animate({ scrollTop: targetOffset }, 1500, "easeInOutExpo");
+    });
+
+    // Button hover effects
+    $(".headerBtn a, .introductionBtn a, .coupleBtn a, .tilakBtn a, .haldiBtn a, .weddingBtn a, .galleryBtn a").hover(
+        function() {
+            $(this).animate({ opacity: 0.7 }, 200);
+        }, function() {
+            $(this).animate({ opacity: 1 }, 200);
+        }
+    );
+});
