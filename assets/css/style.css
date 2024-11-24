@@ -412,6 +412,10 @@ a.mob-toggle {
     line-height: 36px;
     background-color: rgb(237 166 19);
 }
+.scroll{
+    display: block;
+    margin: 0 auto; /* Center the GIF */
+    cursor: pointer; /* Change cursor to pointer on hover */
 .navmenu {
     background: #eda613;
     color: #fff;
