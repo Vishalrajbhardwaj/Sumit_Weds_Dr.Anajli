@@ -314,7 +314,6 @@ figure.groom {
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
-    border: 10px solid #de2828;
     overflow: hidden;
     width: 250px;
     height: 250px;
@@ -596,6 +595,7 @@ figure.rituals {
     padding: 20px;
 }
 
+
 #myBtn {
     width: 100px;
     font-size: 18px;
@@ -609,4 +609,23 @@ figure.rituals {
 #myBtn:hover {
     background: #ddd;
     color: black;
+}
+.round-image {
+    border-radius: 50%; /* Makes the image round */
+    width: 200px; /* Set a specific width */
+    height: 200px; /* Set a specific height */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+}
+/* Optional styling for scroll-up button */
+.scrollup {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none; /* Initially hidden */
+    background: #d1ac06;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
 }
